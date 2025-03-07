@@ -1,7 +1,6 @@
 package com.chandresh.quizonic.stack;
 
 import java.util.List;
-
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.services.iam.*;
 import software.constructs.Construct;
@@ -23,18 +22,29 @@ public class QuizonicPipelineRole extends Construct {
                     ManagedPolicy.fromAwsManagedPolicyName("AWSSSMReadOnlyAccess")))
             .build();
 
-    pipelineRole.addToPolicy(PolicyStatement.Builder.create()
-                    .effect(Effect.ALLOW)
+    pipelineRole.addToPolicy(
+        PolicyStatement.Builder.create()
+            .effect(Effect.ALLOW)
             .actions(List.of("sts:AssumeRole"))
-            .resources(List.of("arn:aws:iam::" + Stack.of(this).getAccount() + ":role/QuizonicCodeBuildRole"))
+            .resources(
+                List.of(
+                    "arn:aws:iam::" + Stack.of(this).getAccount() + ":role/QuizonicCodeBuildRole"))
             .build());
 
-    pipelineRole.addToPolicy(PolicyStatement.Builder.create()
-                    .effect(Effect.ALLOW)
-            .actions(List.of("codebuild:StartBuild",
+    pipelineRole.addToPolicy(
+        PolicyStatement.Builder.create()
+            .effect(Effect.ALLOW)
+            .actions(
+                List.of(
+                    "codebuild:StartBuild",
                     "codebuild:BatchGetBuilds",
-                "codebuild:StopBuild", "codebuild:ListBuilds"))
-            .resources(List.of("arn:aws:ia,::" + Stack.of(this).getAccount() + ":project/QuizonicBuildProject"))
+                    "codebuild:StopBuild",
+                    "codebuild:ListBuilds"))
+            .resources(
+                List.of(
+                    "arn:aws:ia,::"
+                        + Stack.of(this).getAccount()
+                        + ":project/QuizonicBuildProject"))
             .build());
   }
 }

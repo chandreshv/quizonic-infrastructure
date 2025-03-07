@@ -31,7 +31,13 @@ public class QuizonicIAMStack extends Stack {
         PolicyStatement.Builder.create()
             .effect(Effect.ALLOW)
             .actions(
-                List.of("cloudformation:*", "iam:PassRole", "s3:*", "ec2:*", "ssm:GetParameter", "ssm:PutParameter"))
+                List.of(
+                    "cloudformation:*",
+                    "iam:PassRole",
+                    "s3:*",
+                    "ec2:*",
+                    "ssm:GetParameter",
+                    "ssm:PutParameter"))
             .resources(List.of("*"))
             .build();
 
